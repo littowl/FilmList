@@ -1,28 +1,24 @@
-import Button from "@/components/common/Button/Button";
-import React from "react";
-import { VscSymbolColor } from "react-icons/vsc";
-import * as Style from "./index.styled";
+import React from 'react'
+import { BsMoon } from 'react-icons/bs'
+import { FiSun } from 'react-icons/fi'
+import * as Style from './index.styled'
 
 type HeaderProps = {
-  switchTheme: () => void;
-};
-const Header: React.FC<HeaderProps> = (props) => {
-  return (
-    <Style.Header id="header">
-      <Style.Content>
-        <Style.Logo>
-          <Style.Img src="https://yts.mx/assets/images/website/logo-YTS.svg"></Style.Img>
-          <Style.Name>HD movies at the smallest file size.</Style.Name>
-        </Style.Logo>
-
-        <Style.Buttons>
-          <Button
-            name={<VscSymbolColor />}
-            action={() => props.switchTheme()}
-          />
-        </Style.Buttons>
-      </Style.Content>
-    </Style.Header>
-  );
-};
-export default Header;
+    switchTheme: () => void
+    theme?: string
+}
+const Header: React.FC<HeaderProps> = ({ switchTheme, theme }) => {
+    return (
+        <Style.Header id="header">
+            <Style.Name>FilmList</Style.Name>
+            <Style.Button onClick={() => switchTheme()}>
+                {theme === 'light' ? (
+                    <BsMoon />
+                ) : (
+                    <FiSun style={{ color: 'white' }} />
+                )}
+            </Style.Button>
+        </Style.Header>
+    )
+}
+export default Header

@@ -1,12 +1,28 @@
-import { MainLayout } from "@/components/layouts/Main";
-import Films from "@/components/templates/Films/index";
+import { MainLayout } from '@/components/layouts/Main'
+import Films from '@/components/templates/Films/index'
+import { Filter } from '@/components/templates/Filter'
+import { useState } from 'react'
 
 const App = () => {
-  return (
-    <MainLayout>
-      <Films />
-    </MainLayout>
-  );
-};
+    const [select, setSelect] = useState<string>('')
+    return (
+        <MainLayout>
+            <Filter
+                select={select}
+                setSelect={setSelect}
+                genres={[
+                    'Thriller',
+                    'Romance',
+                    'Drama',
+                    'Horror',
+                    'Action',
+                    'Sport',
+                    'Mystery',
+                ]}
+            />
+            <Films genre={select} />
+        </MainLayout>
+    )
+}
 
-export default App;
+export default App

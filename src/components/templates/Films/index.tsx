@@ -1,35 +1,52 @@
-import { useFilmList } from "@/lib/hooks/useFilmList";
-import { useState } from "react";
-import Pagination from "../../common/Pagination/Pagination";
-import Film from "./Film/Film";
-import * as Style from "./index.styled";
+import { useFilmList } from '@/lib/hooks/useFilmList'
+import { useState } from 'react'
+import Pagination from '../../common/Pagination/Pagination'
+import * as Style from './index.styled'
+import Loader from '@/components/common/Loader'
+import Film from './Film/Film'
 
-const Films = () => {
-  const [page, setPage] = useState(1);
-  const pageSize = 10;
-  const { filmList, isLoading } = useFilmList(String(page), String(pageSize));
+interface FilmProps {
+    genre: string
+}
 
-  const filmsList = filmList?.data.movies.map((film) => {
-    return <Film key={film.id} {...film}></Film>;
-  });
+const Films = ({ genre }: FilmProps) => {
+    const [page, setPage] = useState(1)
+    const { filmList, isLoading } = useFilmList(String(page), String(10), genre)
 
-  if (isLoading) {
-    return;
-  }
-  return filmList ? (
-    <Style.Films>
-      <Style.Content>
-        <Style.Title>Films</Style.Title>
-        <Style.List>{filmsList}</Style.List>
-        <Pagination
-          totalUsersCount={filmList?.data?.movie_count}
-          currentPage={page}
-          pageSize={pageSize}
-          onPageChange={(page) => setPage(page)}
-        />
-      </Style.Content>
-    </Style.Films>
-  ) : null;
-};
+    if (isLoading) {
+        return <Loader />
+    }
 
-export default Films;
+    return filmList ? (
+        <>
+            <Style.Films>
+                {filmList.data.movies.map(
+                    ({
+                        id,
+                        medium_cover_image,
+                        title_long,
+                        genres,
+                        rating,
+                    }) => (
+                        <Film
+                            key={id}
+                            id={id}
+                            medium_cover_image={medium_cover_image}
+                            title_long={title_long}
+                            genres={genres}
+                            rating={rating}
+                        />
+                    )
+                )}
+            </Style.Films>
+            <Pagination
+                totalUsersCount={filmList.data.movie_count}
+                pageSize={10}
+                currentPage={page}
+                onPageChange={setPage}
+            />
+        </>
+    ) : null
+}
+
+export default Films

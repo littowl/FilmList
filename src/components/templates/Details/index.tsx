@@ -1,108 +1,86 @@
-import Loader from "@/components/common/Loader";
-import * as Style from "@/components/templates/Details/index.styled";
-import { useFilmRetrieve } from "@/lib/hooks/useFilmRetrieve";
-import { useRouter } from "next/router";
-import { VscDesktopDownload, VscStarFull } from "react-icons/vsc";
-import GenreItem from "./GenreItem/GenreItem";
-import StatisticItem from "./StatisticItem/StatisticItem";
-import Torrent from "./TorrentItem";
-
-import { AiTwotoneLike } from "react-icons/ai";
-
-import Link from "next/link";
-import { BiTimeFive } from "react-icons/bi";
+import Loader from '@/components/common/Loader'
+import * as Style from '@/components/templates/Details/index.styled'
+import { useFilmRetrieve } from '@/lib/hooks/useFilmRetrieve'
+import { useRouter } from 'next/router'
+import { IoMdArrowBack } from 'react-icons/io'
+import { LuDownload } from 'react-icons/lu'
+import Link from 'next/link'
+import { FaStar } from 'react-icons/fa6'
+import { Favourite } from '@/components/common/Favourite'
 const Details = () => {
-  const router = useRouter();
-  const { filmRetrieve, isLoading } = useFilmRetrieve(
-    (router.query.id as string) || ""
-  );
+    const router = useRouter()
+    const { filmRetrieve, isLoading } = useFilmRetrieve(
+        (router.query.id as string) || ''
+    )
 
-  if (isLoading) {
-    return <Loader />;
-  }
+    if (isLoading) {
+        return <Loader />
+    }
 
-  const genresList = filmRetrieve?.data.movie.genres.map((value) => {
-    return <GenreItem key={value} text={value} />;
-  });
-  const torrentsList = filmRetrieve?.data.movie.torrents.map((item, index) => {
+    const descriptionSlice = (desc: string) =>
+        desc.split('.').length > 5
+            ? desc.split('.').slice(0, 5).join('. ')
+            : desc
+
     return (
-      <Torrent
-        key={index}
-        href={item.url}
-        quality={item.quality}
-        type={item.type}
-        size={item.size}
-      />
-    );
-  });
+        <Style.Details>
+            <Style.Header>
+                <Link href="/">
+                    <IoMdArrowBack />
+                </Link>
+                <h2>{filmRetrieve?.data.movie.title}</h2>
+            </Style.Header>
 
-  return (
-    <Style.Details>
-      <Style.BackgroundImage
-        src={filmRetrieve?.data.movie.background_image_original}
-      ></Style.BackgroundImage>
-      <Style.Content>
-        <Style.ContentTitle>
-          <Link href={"/"}>Films / {filmRetrieve?.data.movie.title}</Link>
-        </Style.ContentTitle>
+            <Style.Info>
+                <Style.Img src={filmRetrieve?.data.movie.medium_cover_image} />
+                <Style.About>
+                    <Style.GroupBtn>
+                        <Style.Watch>
+                            <Link href={String(filmRetrieve?.data.movie.url)}>
+                                Watch
+                            </Link>
+                        </Style.Watch>
+                        <Style.Torrent>
+                            <Link
+                                href={String(
+                                    filmRetrieve?.data.movie.torrents[0].url
+                                )}
+                            >
+                                Download Torrent
+                                <LuDownload />
+                            </Link>
+                        </Style.Torrent>
+                        <Favourite id={Number(router.query.id)} />
+                    </Style.GroupBtn>
+                    <Style.Characteristics>
+                        Production year: &nbsp;&nbsp;{' '}
+                        {filmRetrieve?.data.movie.year}
+                        <br />
+                        Genre:&nbsp;&nbsp;
+                        {filmRetrieve?.data.movie.genres.map((genre, idx) =>
+                            (idx === filmRetrieve?.data.movie.genres.length - 1
+                                ? genre
+                                : `${genre}, `
+                            ).toLowerCase()
+                        )}
+                        <br />
+                        Rating:&nbsp;&nbsp;{
+                            filmRetrieve?.data.movie.rating
+                        }/10 <FaStar />
+                    </Style.Characteristics>
 
-        <Style.Data>
-          <Style.Image>
-            <Style.Img
-              src={filmRetrieve?.data.movie.large_cover_image}
-            ></Style.Img>
-            <Style.Buttons>
-              <Style.DownloadButton href={filmRetrieve?.data.movie.url}>
-                Download
-              </Style.DownloadButton>
-              <Style.WatchButton href={filmRetrieve?.data.movie.url}>
-                Watch Now
-              </Style.WatchButton>
-            </Style.Buttons>
-          </Style.Image>
+                    <br />
+                    <p style={{ alignSelf: 'end' }}>
+                        {filmRetrieve?.data.movie.description_full
+                            ? descriptionSlice(
+                                  filmRetrieve?.data.movie.description_full
+                              )
+                            : "No film's description"}
+                    </p>
+                </Style.About>
+            </Style.Info>
+        </Style.Details>
+    )
+}
 
-          <Style.Description>
-            <Style.Title>{filmRetrieve?.data.movie.title}</Style.Title>
-
-            <Style.Year>
-              {filmRetrieve?.data.movie.year +
-                " " +
-                filmRetrieve?.data.movie.language}
-            </Style.Year>
-
-            <Style.Genres>{genresList}</Style.Genres>
-
-            <Style.DescriptionFull>
-              {filmRetrieve?.data.movie.description_full}
-            </Style.DescriptionFull>
-
-            <Style.Statistic>
-              <StatisticItem
-                icon={<VscStarFull />}
-                text={filmRetrieve?.data.movie.rating}
-              ></StatisticItem>
-              <StatisticItem
-                icon={<AiTwotoneLike />}
-                text={filmRetrieve?.data.movie.like_count}
-              ></StatisticItem>
-              <StatisticItem
-                icon={<BiTimeFive />}
-                text={filmRetrieve?.data.movie.runtime}
-              ></StatisticItem>
-              <StatisticItem
-                icon={<VscDesktopDownload />}
-                text={filmRetrieve?.data.movie.download_count}
-              ></StatisticItem>
-            </Style.Statistic>
-
-            <Style.TorrentsTitle>Downloads:</Style.TorrentsTitle>
-
-            <Style.Torrents>{torrentsList}</Style.Torrents>
-          </Style.Description>
-        </Style.Data>
-      </Style.Content>
-    </Style.Details>
-  );
-};
-
-export default Details;
+export default Details
