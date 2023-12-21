@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import * as Style from './index.styled'
 import { IoSend } from 'react-icons/io5'
+import { MdDelete } from 'react-icons/md'
+
 export const CommentForm = () => {
     const [comment, setComment] = useState('')
     const [comments, setComments] = useState<
@@ -39,6 +41,17 @@ export const CommentForm = () => {
                     comments.map(({ id, text }) => (
                         <Style.Comment key={id}>
                             <Style.Text>{text}</Style.Text>
+                            <Style.Delete
+                                onClick={() =>
+                                    setComments(
+                                        comments.filter(
+                                            (comment) => comment.id !== id
+                                        )
+                                    )
+                                }
+                            >
+                                <MdDelete />
+                            </Style.Delete>
                         </Style.Comment>
                     ))
                 ) : (

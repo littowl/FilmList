@@ -38,6 +38,9 @@ export const Comment = styled.li`
     background: ${(props) => props.theme.film};
     padding: 20px;
     border-radius: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 `
 
 export const Text = styled.div`
@@ -45,6 +48,18 @@ export const Text = styled.div`
     height: auto;
     align-items: center;
     font-size: 20px;
+`
+
+export const Delete = styled.button`
+    cursor: pointer;
+    margin-left: 10px;
+    display: flex;
+    align-items: center;
+    & > svg {
+        width: 20px;
+        height: 20px;
+        fill: #ab9d9d;
+    }
 `
 
 export const Placeholder = styled.p`
