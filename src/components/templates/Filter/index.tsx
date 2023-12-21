@@ -30,6 +30,7 @@ export const Filter = ({ select, setSelect, genres }: FilterProps) => {
                         key={genre}
                         onClick={() => {
                             setSelect(genre)
+                            localStorage.setItem(`select`, genre)
                             setVisible(false)
                         }}
                     >

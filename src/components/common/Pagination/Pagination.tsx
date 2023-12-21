@@ -47,9 +47,10 @@ const Pagination: React.FC<PaginationProps> = (props) => {
                 return (
                     <Style.Item
                         key={`pagination${element}`}
-                        onClick={() =>
+                        onClick={() => {
+                            localStorage.setItem(`page`, String(element))
                             props.onPageChange(element, props.pageSize)
-                        }
+                        }}
                     >
                         {element}
                     </Style.Item>

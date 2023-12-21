@@ -1,5 +1,5 @@
 import { useFilmList } from '@/lib/hooks/useFilmList'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Pagination from '../../common/Pagination/Pagination'
 import * as Style from './index.styled'
 import Loader from '@/components/common/Loader'
@@ -12,6 +12,10 @@ interface FilmProps {
 const Films = ({ genre }: FilmProps) => {
     const [page, setPage] = useState(1)
     const { filmList, isLoading } = useFilmList(String(page), String(10), genre)
+
+    useEffect(() => {
+        setPage(Number(localStorage.getItem(`page`)) || 1)
+    }, [])
 
     if (isLoading) {
         return <Loader />

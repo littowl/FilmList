@@ -28,7 +28,10 @@ const Details = () => {
                 <Link href="/">
                     <IoMdArrowBack />
                 </Link>
-                <h2>{filmRetrieve?.data.movie.title}</h2>
+                <h2>
+                    {filmRetrieve?.data.movie.title ||
+                        'No title data from query by id'}
+                </h2>
             </Style.Header>
 
             <Style.Info>
@@ -43,7 +46,10 @@ const Details = () => {
                         <Style.Torrent>
                             <Link
                                 href={String(
-                                    filmRetrieve?.data.movie.torrents[0].url
+                                    filmRetrieve?.data.movie.torrents
+                                        ? filmRetrieve?.data.movie.torrents[0]
+                                              .url
+                                        : ''
                                 )}
                             >
                                 Download Torrent
@@ -54,7 +60,9 @@ const Details = () => {
                     </Style.GroupBtn>
                     <Style.Characteristics>
                         Production year: &nbsp;&nbsp;{' '}
-                        {filmRetrieve?.data.movie.year}
+                        {filmRetrieve?.data.movie.year === 0
+                            ? 'no year data from query by id'
+                            : filmRetrieve?.data.movie.year}
                         <br />
                         Genre:&nbsp;&nbsp;
                         {filmRetrieve?.data.movie.genres.map((genre, idx) =>
