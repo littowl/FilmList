@@ -37,7 +37,8 @@ export type MovieList = {
 export const filmListQuery = async (
     currentPage: string,
     pageSize: string,
-    genre: string
+    genre: string,
+    variant: string
 ) => {
     const response = await axios.get<{
         data: {
@@ -46,7 +47,7 @@ export const filmListQuery = async (
             page_count: number
             movies: MovieList[]
         }
-    }>(`list_movies.json?page=${currentPage}&limit=${pageSize}&genre=${genre}`)
+    }>(`list_movies.json?page=${currentPage}&limit=${pageSize}&genre=${genre}&sort_by=${variant}`)
     return response.data
 }
 

@@ -7,11 +7,12 @@ import Film from './Film/Film'
 
 interface FilmProps {
     genre: string
+    variant: string
 }
 
-const Films = ({ genre }: FilmProps) => {
+const Films = ({ variant, genre }: FilmProps) => {
     const [page, setPage] = useState(1)
-    const { filmList, isLoading } = useFilmList(String(page), String(10), genre)
+    const { filmList, isLoading } = useFilmList(String(page), String(10), genre, variant)
 
     useEffect(() => {
         setPage(Number(localStorage.getItem(`page`)) || 1)

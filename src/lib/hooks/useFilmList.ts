@@ -5,7 +5,8 @@ import { filmListQuery } from '@/lib/api'
 export const useFilmList = (
     currentPage: string,
     pageSize: string,
-    genre: string
+    genre: string,
+    variant: string
 ) => {
     const queryClient = useQueryClient()
 
@@ -15,8 +16,8 @@ export const useFilmList = (
         isLoading,
         isError,
     } = useQuery({
-        queryKey: ['getFilmList', currentPage, pageSize, genre],
-        queryFn: () => filmListQuery(currentPage, pageSize, genre),
+        queryKey: ['getFilmList', currentPage, pageSize, genre, variant],
+        queryFn: () => filmListQuery(currentPage, pageSize, genre, variant),
         keepPreviousData: true,
         cacheTime: 1000 * 60 * 60,
         staleTime: 1000 * 60 * 60,
