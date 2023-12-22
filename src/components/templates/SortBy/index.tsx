@@ -5,13 +5,21 @@ interface SortByProps {
     setVariant: (variant: string) => void
 }
 
-export const SortBy = ({variant, setVariant}: SortByProps) => {
+export const SortBy = ({ variant, setVariant }: SortByProps) => {
     return (
         <Style.SortBy>
-            <Style.Item onClick={() => {
-                setVariant(variant === 'rating' ? '' : 'rating')
-            }}>
-                <p style={{textDecoration: variant === 'rating' ? 'underline' : ''}}>Highly rated movies</p>
+            <Style.Item
+                onClick={() => {
+                    setVariant(variant === 'rating' ? '' : 'rating')
+                }}
+            >
+                <p
+                    style={{
+                        textDecoration: variant === 'rating' ? 'underline' : '',
+                    }}
+                >
+                    Highly rated movies
+                </p>
             </Style.Item>
             {/* <Style.Item onClick={() => {
                 setVariant(variant === 'download_count' ? '' : 'download_count')

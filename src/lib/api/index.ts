@@ -47,7 +47,9 @@ export const filmListQuery = async (
             page_count: number
             movies: MovieList[]
         }
-    }>(`list_movies.json?page=${currentPage}&limit=${pageSize}&genre=${genre}&sort_by=${variant}`)
+    }>(
+        `list_movies.json?page=${currentPage}&limit=${pageSize}&genre=${genre}&sort_by=${variant}`
+    )
     return response.data
 }
 

@@ -14,20 +14,20 @@ const App = () => {
 
     return (
         <MainLayout>
-                <Filter
-                    select={select}
-                    setSelect={setSelect}
-                    genres={[
-                        'Thriller',
-                        'Romance',
-                        'Drama',
-                        'Horror',
-                        'Action',
-                        'Sport',
-                        'Mystery',
-                    ]}
-                />
-                <SortBy variant={variant} setVariant={setVariant} />
+            <Filter
+                select={select}
+                setSelect={setSelect}
+                genres={[
+                    'Thriller',
+                    'Romance',
+                    'Drama',
+                    'Horror',
+                    'Action',
+                    'Sport',
+                    'Mystery',
+                ]}
+            />
+            <SortBy variant={variant} setVariant={setVariant} />
             <Films genre={select} variant={variant} />
         </MainLayout>
     )
