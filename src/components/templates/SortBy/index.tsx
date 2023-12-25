@@ -21,11 +21,22 @@ export const SortBy = ({ variant, setVariant }: SortByProps) => {
                     Highly rated movies
                 </p>
             </Style.Item>
-            {/* <Style.Item onClick={() => {
-                setVariant(variant === 'download_count' ? '' : 'download_count')
-            }}>
-                <p style={{textDecoration: variant === 'download_count' ? 'underline' : ''}}>By download count</p>
-            </Style.Item> */}
+            <Style.Item
+                onClick={() => {
+                    setVariant(
+                        variant === 'download_count' ? '' : 'download_count'
+                    )
+                }}
+            >
+                <p
+                    style={{
+                        textDecoration:
+                            variant === 'download_count' ? 'underline' : '',
+                    }}
+                >
+                    By download count
+                </p>
+            </Style.Item>
         </Style.SortBy>
     )
 }
